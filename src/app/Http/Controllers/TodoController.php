@@ -21,3 +21,15 @@ class TodoController extends Controller
         // 配列ではなくコレクションで返す理由
         return view('todo.index',['todos' => $todos]);
     }
+    public function create()
+    {
+        return view('todo.create');
+    }
+
+    public function store(TodoRequest $request)
+    {
+        $inputs = $request->all();
+        $this->todo->fill($inputs);
+        $this->todo->save();
+        return redirect()->route('todo.index');
+    }
