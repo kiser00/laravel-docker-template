@@ -21,6 +21,7 @@ class TodoController extends Controller
         // 配列ではなくコレクションで返す理由
         return view('todo.index',['todos' => $todos]);
     }
+
     public function create()
     {
         return view('todo.create');
@@ -32,6 +33,8 @@ class TodoController extends Controller
         $this->todo->fill($inputs);
         $this->todo->save();
         return redirect()->route('todo.index');
+    }
+
     public function show($id)
     {
         $todo = $this->todo->find($id);
@@ -43,6 +46,7 @@ class TodoController extends Controller
         $todo = $this->todo->find($id);
         return view('todo.edit', ['todo' => $todo]);
     }
+
     public function update(TodoRequest $request, $id)
     {
         $inputs = $request->all();
@@ -52,4 +56,11 @@ class TodoController extends Controller
         $todo->save();
         return redirect()->route('todo.show', $todo->id);
     }
+
+    public function delete($id)
+    {
+        $todo = $this->todo->find($id);
+        $todo->delete();
+        return redirect()->route('todo.index');
     }
+}
